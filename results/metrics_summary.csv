@@ -1,0 +1,5 @@
+variant,accuracy,size_kb,params,latency_ms,fps,power_assumed_device_power_watts,power_energy_per_inference_mj,power_inferences_per_joule,size_reduction_pct_vs_baseline,latency_reduction_pct_vs_baseline
+Baseline (FP32),0.9842,105.8,26698,0.02388,41876.7,2.7,0.0645,15509.65,0.0,0.0
+"Pruned (50% sparse, FP32, fine-tuned)",0.9779,105.8,26698,0.0254,39364.9,2.7,0.0686,14581.51,0.0,-6.37
+"Quantized (INT8, from baseline)",0.9841,32.03,26714,0.10504,9520.4,2.7,0.2836,3525.99,69.73,-339.87
+Combined (pruned + quantized),0.9776,32.03,26714,0.11395,8775.6,2.7,0.3077,3250.29,69.73,-377.18

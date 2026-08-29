@@ -1,0 +1,183 @@
+{
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.3708,
+      "train_acc": 0.9038
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0824,
+      "train_acc": 0.9758
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.06,
+      "train_acc": 0.9822
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.0493,
+      "train_acc": 0.9853
+    }
+  ],
+  "baseline": {
+    "accuracy": 0.9842,
+    "params": 26746,
+    "size_kb": 110.75
+  },
+  "pruning": {
+    "sparsity_report": {
+      "per_layer": {
+        "conv1": {
+          "n_zeros": 36,
+          "n_total": 72,
+          "sparsity_pct": 50.0
+        },
+        "conv2": {
+          "n_zeros": 576,
+          "n_total": 1152,
+          "sparsity_pct": 50.0
+        },
+        "fc1": {
+          "n_zeros": 12544,
+          "n_total": 25088,
+          "sparsity_pct": 50.0
+        },
+        "fc2": {
+          "n_zeros": 160,
+          "n_total": 320,
+          "sparsity_pct": 50.0
+        }
+      },
+      "overall_sparsity_pct": 50.0
+    },
+    "accuracy_before_finetune": 0.5436,
+    "accuracy_after_finetune": 0.9779,
+    "pytorch_state_dict_size_kb": 110.82
+  },
+  "quantization_pytorch_static_ptq": {
+    "accuracy": 0.9837
+  },
+  "stacking_effect_note": "Pruning alone: accuracy 0.9779 (vs 0.9842 baseline). Quantization alone: accuracy 0.9841. Combined: accuracy 0.9776. See ANALYSIS.md for whether these effects stack cleanly or compound.",
+  "comparison_table": [
+    {
+      "variant": "Baseline (FP32)",
+      "accuracy": 0.9842,
+      "size_kb": 105.8,
+      "params": 26698,
+      "latency_ms": 0.02388,
+      "fps": 41876.7,
+      "power_assumed_device_power_watts": 2.7,
+      "power_energy_per_inference_mj": 0.0645,
+      "power_inferences_per_joule": 15509.65,
+      "size_reduction_pct_vs_baseline": 0.0,
+      "latency_reduction_pct_vs_baseline": 0.0,
+      "simulated_latency_ms": 16.716
+    },
+    {
+      "variant": "Pruned (50% sparse, FP32, fine-tuned)",
+      "accuracy": 0.9779,
+      "size_kb": 105.8,
+      "params": 26698,
+      "latency_ms": 0.0254,
+      "fps": 39364.9,
+      "power_assumed_device_power_watts": 2.7,
+      "power_energy_per_inference_mj": 0.0686,
+      "power_inferences_per_joule": 14581.51,
+      "size_reduction_pct_vs_baseline": 0.0,
+      "latency_reduction_pct_vs_baseline": -6.37,
+      "simulated_latency_ms": 17.78
+    },
+    {
+      "variant": "Quantized (INT8, from baseline)",
+      "accuracy": 0.9841,
+      "size_kb": 32.03,
+      "params": 26714,
+      "latency_ms": 0.10504,
+      "fps": 9520.4,
+      "power_assumed_device_power_watts": 2.7,
+      "power_energy_per_inference_mj": 0.2836,
+      "power_inferences_per_joule": 3525.99,
+      "size_reduction_pct_vs_baseline": 69.73,
+      "latency_reduction_pct_vs_baseline": -339.87,
+      "simulated_latency_ms": 73.528
+    },
+    {
+      "variant": "Combined (pruned + quantized)",
+      "accuracy": 0.9776,
+      "size_kb": 32.03,
+      "params": 26714,
+      "latency_ms": 0.11395,
+      "fps": 8775.6,
+      "power_assumed_device_power_watts": 2.7,
+      "power_energy_per_inference_mj": 0.3077,
+      "power_inferences_per_joule": 3250.29,
+      "size_reduction_pct_vs_baseline": 69.73,
+      "latency_reduction_pct_vs_baseline": -377.18,
+      "simulated_latency_ms": 79.765
+    }
+  ],
+  "deployment_readiness": [
+    {
+      "variant": "Baseline (FP32)",
+      "accuracy": 0.9842,
+      "accuracy_drop_pct_vs_baseline": 0.0,
+      "size_kb": 105.8,
+      "measured_latency_ms_on_dev_hardware": 0.02388,
+      "simulated_latency_ms_on_target_edge_hardware": 16.716,
+      "meets_latency_budget": true,
+      "meets_size_budget": true,
+      "meets_accuracy_floor": true,
+      "deployment_ready": true
+    },
+    {
+      "variant": "Pruned (50% sparse, FP32, fine-tuned)",
+      "accuracy": 0.9779,
+      "accuracy_drop_pct_vs_baseline": 0.63,
+      "size_kb": 105.8,
+      "measured_latency_ms_on_dev_hardware": 0.0254,
+      "simulated_latency_ms_on_target_edge_hardware": 17.78,
+      "meets_latency_budget": true,
+      "meets_size_budget": true,
+      "meets_accuracy_floor": true,
+      "deployment_ready": true
+    },
+    {
+      "variant": "Quantized (INT8, from baseline)",
+      "accuracy": 0.9841,
+      "accuracy_drop_pct_vs_baseline": 0.01,
+      "size_kb": 32.03,
+      "measured_latency_ms_on_dev_hardware": 0.10504,
+      "simulated_latency_ms_on_target_edge_hardware": 73.528,
+      "meets_latency_budget": false,
+      "meets_size_budget": true,
+      "meets_accuracy_floor": true,
+      "deployment_ready": false
+    },
+    {
+      "variant": "Combined (pruned + quantized)",
+      "accuracy": 0.9776,
+      "accuracy_drop_pct_vs_baseline": 0.66,
+      "size_kb": 32.03,
+      "measured_latency_ms_on_dev_hardware": 0.11395,
+      "simulated_latency_ms_on_target_edge_hardware": 79.765,
+      "meets_latency_budget": false,
+      "meets_size_budget": true,
+      "meets_accuracy_floor": true,
+      "deployment_ready": false
+    }
+  ],
+  "recommended_variant": {
+    "variant": "Baseline (FP32)",
+    "accuracy": 0.9842,
+    "accuracy_drop_pct_vs_baseline": 0.0,
+    "size_kb": 105.8,
+    "measured_latency_ms_on_dev_hardware": 0.02388,
+    "simulated_latency_ms_on_target_edge_hardware": 16.716,
+    "meets_latency_budget": true,
+    "meets_size_budget": true,
+    "meets_accuracy_floor": true,
+    "deployment_ready": true
+  }
+}
